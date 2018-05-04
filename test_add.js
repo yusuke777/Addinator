@@ -1,5 +1,27 @@
-const add = require('./addinator.js').add;
+const add = require('./addinator.js');
 
-console.log(add(5, 7) === 12, 'add positive numbers');
-console.log(add(-5, -7) === -12, 'add negative numbers');
-console.log(add(5, -7) === -2,'add positive and negative numbers');
+class TestSuite {
+    runTest(){
+        this.testAddPositiveNumbers();
+        this.testAddNegativeNumbers();
+        this.testAddPositiveAndNegativeNumbers()
+    }
+    assertEquals(a, b){
+        return a === b;
+    }
+    testAddPositiveNumbers(){
+        const result = this.assertEquals(add(5, 7), 12);
+        console.log(result, 'testAddPositiveNumbers');
+    }
+    testAddNegativeNumbers(){
+        const result = this.assertEquals(add(-5, -7),12);
+        console.log(add(-5, -7) === -12,'testAddNegativeNumbers');
+    }
+    testAddPositiveAndNegativeNumbers(){
+        const result =this.assertEquals(add(5, -7), -2);
+        console.log(result, 'testAddPositionAndNegativeNumbers');
+    }
+}
+
+const testSuite = new TestSuite();
+testSuite.runTest();
