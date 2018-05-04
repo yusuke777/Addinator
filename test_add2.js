@@ -1,25 +1,27 @@
 const add = require('./addinator.js');
 
 class TestSuite {
+    runTest(testName){
+        const result = this[testName]();
+        console.log(result, testName);   
+    }
     runTest(){
-        this.testAddPositiveNumbers();
-        this.testAddNegativeNumbers();
-        this.testAddPositiveAndNegativeNumbers()
+       Object.getOwnPropertyNames(Object.getPrototypeOf(this))
+       .filter(prop => this[prop] instanceof Function)
+       .filter(prop => prop.indexOf('test') !== -1)
+       .forEach(testName => this.runTest(testName));
     }
     assertEquals(a, b){
         return a === b;
     }
     testAddPositiveNumbers(){
-        const result = this.assertEquals(add(5, 7), 12);
-        console.log(result, 'testAddPositiveNumbers');
+        return this.assertEquals(add(5, 7), 12);
     }
     testAddNegativeNumbers(){
-        const result = this.assertEquals(add(-5, -7),12);
-        console.log(add(-5, -7) === -12,'testAddNegativeNumbers');
+        return this.assertEquals(add(-5, -7),-12);
     }
     testAddPositiveAndNegativeNumbers(){
-        const result =this.assertEquals(add(5, -7), -2);
-        console.log(result, 'testAddPositionAndNegativeNumbers');
+        return this.assertEquals(add(5, -7), -2);
     }
 }
 
